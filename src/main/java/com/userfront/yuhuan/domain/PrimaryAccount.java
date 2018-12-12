@@ -1,13 +1,23 @@
 package com.userfront.yuhuan.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Entity
 public class PrimaryAccount {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int accountNumber;
     private BigDecimal accountBalance; // use BigDecimal instead of Double to avoid decimal number calculation and display problem
 
+    //lazy loading -> boost performance
+    @OneToMany(mappedBy = "primaryAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore //
     private List<PrimaryTransaction> primaryTransactionList;
 
     public Long getId() {

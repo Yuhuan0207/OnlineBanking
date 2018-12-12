@@ -1,9 +1,14 @@
 package com.userfront.yuhuan.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Entity
 public class SavingTransaction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date date;
     private String description;
@@ -11,6 +16,9 @@ public class SavingTransaction {
     private String status;
     private double amount;                 // doesn't use for calculation, so leave as 'double'
     private BigDecimal availableBalance;   // BigDecimal to resolve calculation problem
+
+    @ManyToOne
+    @JoinColumn(name = "saving_account_id")
     private SavingAccount savingAccount;
 
     public SavingTransaction(){}
