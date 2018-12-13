@@ -18,6 +18,9 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+//    @Autowired
+//    private RoleDao roleDao;
+
     @RequestMapping("/")
     public String home(){
         return "redirect:/index";
