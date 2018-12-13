@@ -1,5 +1,7 @@
 package com.userfront.yuhuan.controller;
 
+import com.userfront.yuhuan.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,9 @@ import java.util.*;
 
 @Controller //will be register as bean
 public class HomeController {
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/")
     public String home(){
@@ -32,21 +37,19 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public void signupPost(@ModelAttribute("user") User user, Model model){
-//        if(userService.checkUserExists()){
-//            if(userService.checkEmailExists(user.getEmail())){
-//                model.addAttribute("emailExists", true);
-//            }
-//            if(userService.checkUsernameExists(user.getUsername())){
-//                model.addAttribute("emailExists", true);
-//            }
-//            return "signup";
-//        } else {
-//            Set<UserRole> userRoles = new HashSet<UserRole>();
-//            userRoles.add(new UserRole(user, roleDao.findByName("USER")));
-//            userService.createUser(user, userRoles);
-//
-//            return "redirect:/";
-//        }
+    public String signupPost(@ModelAttribute("user") User user, Model model){
+        if(userService.checkUserExists(user.getUsername(), user.getEmail())){
+            if(userService.checkEmailExists(user.getEmail())){
+                model.addAttribute("emailExists", true);
+            }
+            if(userService.checkUsernameExists(user.getUsername())){
+                model.addAttribute("emailExists", true);
+            }
+            return "signup";
+        } else {
+            userService.save(user);
+
+            return "redirect:/";
+        }
     }
 }
