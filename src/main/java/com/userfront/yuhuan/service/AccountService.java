@@ -9,4 +9,5 @@ public interface AccountService {
     PrimaryAccount createPrimaryAccount();
     SavingAccount createSavingAccount();
     void deposit(String accountType, double amount, Principal principal);
+    void withdraw(String accountType, double amount, Principal principal);
 }
