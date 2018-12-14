@@ -4,14 +4,15 @@ package com.userfront.yuhuan.service.UserServiceImpl;
 
 import com.userfront.yuhuan.dao.PrimaryAccountDao;
 import com.userfront.yuhuan.dao.SavingAccountDao;
-import com.userfront.yuhuan.domain.PrimaryAccount;
-import com.userfront.yuhuan.domain.SavingAccount;
+import com.userfront.yuhuan.domain.*;
 import com.userfront.yuhuan.service.AccountService;
 import com.userfront.yuhuan.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.security.Principal;
+import java.util.Date;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -46,6 +47,32 @@ public class AccountServiceImpl implements AccountService {
 
         return savingAccountDao.findByAccountNumber(savingAccount.getAccountNumber());
     }
+
+    public void deposit(String accountType, double amount, Principal principal){
+        User user = userService.findByUsername(principal.getName());
+
+        if(accountType.equalsIgnoreCase("Primary")) {
+            PrimaryAccount primaryAccount = user.getPrimaryAccount();
+            primaryAccount.setAccountBalance(primaryAccount.getAccountBalance().add(new BigDecimal(amount)));
+            primaryAccountDao.save(primaryAccount);
+
+            Date date = new Date();
+
+            PrimaryTransaction primaryTransaction = new PrimaryTransaction(date, "Deposit to Primary Account", "Account", "Finished", amount, primaryAccount.getAccountBalance(), primaryAccount);
+//            transactionService.savePrimaryDepositTransaction(primaryTransaction);
+
+        } else if(accountType.equalsIgnoreCase("Saving")) {
+            SavingAccount savingAccount = user.getSavingAccount();
+            savingAccount.setAccountBalance(savingAccount.getAccountBalance().add(new BigDecimal(amount)));
+            savingAccountDao.save(savingAccount);
+
+            Date date = new Date();
+            SavingTransaction savingTransaction = new SavingTransaction(date, "Deposit to Saving Account", "Account", "Finished", amount, savingAccount.getAccountBalance(),savingAccount);
+//            transactionService.saveSavingDepositTransaction(savingTransaction);
+        }
+    }
+
+
 
     private int accountGen(){
         return ++nextAccountNumber;
