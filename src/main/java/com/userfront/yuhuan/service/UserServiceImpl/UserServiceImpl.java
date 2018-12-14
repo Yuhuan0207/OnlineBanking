@@ -1,9 +1,10 @@
 package com.userfront.yuhuan.service.UserServiceImpl;
 
-import com.userfront.yuhuan.Dao.RoleDao;
-import com.userfront.yuhuan.Dao.UserDao;
+import com.userfront.yuhuan.dao.RoleDao;
+import com.userfront.yuhuan.dao.UserDao;
 import com.userfront.yuhuan.domain.User;
 import com.userfront.yuhuan.domain.security.UserRole;
+import com.userfront.yuhuan.service.AccountService;
 import com.userfront.yuhuan.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AccountService accountService;
 
     public void save(User user){
         userDao.save(user);
@@ -57,7 +61,7 @@ public class UserServiceImpl implements UserService{
             user.getUserRoles().addAll(userRoles);
 
             user.setPrimaryAccount(accountService.createPrimaryAccount());
-            user.setPrimaryAccount(accountService.createSavingsAccount());
+            user.setSavingAccount(accountService.createSavingAccount());
 
             localUser = userDao.save(user);
         }

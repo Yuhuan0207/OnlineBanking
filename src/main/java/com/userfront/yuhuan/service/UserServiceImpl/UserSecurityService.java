@@ -1,6 +1,6 @@
 package com.userfront.yuhuan.service.UserServiceImpl;
 
-import com.userfront.yuhuan.Dao.UserDao;
+import com.userfront.yuhuan.dao.UserDao;
 import com.userfront.yuhuan.domain.User;
 
 import org.slf4j.LoggerFactory;

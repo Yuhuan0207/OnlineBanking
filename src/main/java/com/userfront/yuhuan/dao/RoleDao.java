@@ -1,4 +1,4 @@
-package com.userfront.yuhuan.Dao;
+package com.userfront.yuhuan.dao;
 
 import com.userfront.yuhuan.domain.security.Role;
 import org.springframework.data.repository.CrudRepository;

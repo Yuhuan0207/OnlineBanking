@@ -1,6 +1,9 @@
 package com.userfront.yuhuan.service;
 
 import com.userfront.yuhuan.domain.User;
+import com.userfront.yuhuan.domain.security.UserRole;
+
+import java.util.Set;
 
 public interface UserService {
     User findByUsername(String username);
@@ -13,6 +16,8 @@ public interface UserService {
 
     boolean checkEmailExists(String email);
 
-    void createUser(User user);
+    void save(User user); //TODO: save or not?
+
+    User createUser(User user, Set<UserRole> userRoles);
 
 }
