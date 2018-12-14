@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //                antMatchers("/**").
                 antMatchers(PUBLIC_MATCHERS).
                 permitAll().anyRequest().authenticated();
+
         http
                 .csrf().disable().cors().disable()
                 .formLogin().failureUrl("/index?error").defaultSuccessUrl("/userFront").loginPage("/index").permitAll()

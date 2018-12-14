@@ -22,7 +22,7 @@ public class User implements UserDetails{
     private String firstName;
     private String lastName;
 
-    @Column(name = "email",nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
     private String phone;
 
@@ -167,25 +167,25 @@ public class User implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();
         userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
-        return null;
+        return authorities;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        //TODO Auto-generated method stub
-        return false;
+        // TODO Auto-generated method stub
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        //TODO Auto-generated method stub
-        return false;
+        // TODO Auto-generated method stub
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        //TODO Auto-generated method stub
-        return false;
+        // TODO Auto-generated method stub
+        return true;
     }
 
     @Override

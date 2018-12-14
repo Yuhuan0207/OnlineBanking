@@ -1,6 +1,8 @@
 package com.userfront.yuhuan.controller;
 
 import com.userfront.yuhuan.dao.RoleDao;
+import com.userfront.yuhuan.domain.PrimaryAccount;
+import com.userfront.yuhuan.domain.SavingAccount;
 import com.userfront.yuhuan.domain.security.UserRole;
 import com.userfront.yuhuan.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.userfront.yuhuan.domain.User;
 import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
+import java.security.Principal;
 import java.util.*;
 
 @Controller //will be register as bean
@@ -53,11 +56,47 @@ public class HomeController {
             return "signup";
         } else {
             Set<UserRole> userRoles = new HashSet<>();
-            userRoles.add(new UserRole(user, roleDao.findByName("USER")));
+            userRoles.add(new UserRole(user, roleDao.findByName("ROLE_USER")));
 
             userService.createUser(user, userRoles); //TODO: create a new method instead of edit the CRUD
 
             return "redirect:/";
         }
     }
+
+    @RequestMapping("/userFront")
+    public String userFront(Principal principal, Model model){
+        User user = userService.findByUsername(principal.getName());
+        PrimaryAccount primaryAccount = user.getPrimaryAccount();
+        SavingAccount savingAccount = user.getSavingAccount();
+
+        model.addAttribute("primaryAccount", primaryAccount);
+        model.addAttribute("savingAccount", savingAccount);
+
+        return "userFront";
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
