@@ -50,7 +50,7 @@ public class HomeController {
             }
             return "signup";
         } else {
-            userService.save(user);
+            userService.createUser(user); //TODO: create a new method instead of edit the CRUD
 
             return "redirect:/";
         }
