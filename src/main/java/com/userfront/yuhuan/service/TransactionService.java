@@ -10,7 +10,12 @@ public interface TransactionService {
 
     public List<SavingTransaction> findSavingTransactionList(String username);
 
-    public void savePrimaryDepositTransaction(PrimaryTransaction primaryTransaction);
+    void savePrimaryDepositTransaction(PrimaryTransaction primaryTransaction);
 
-    public void saveSavingDepositTransaction(SavingTransaction savingTransaction);
+    void saveSavingDepositTransaction(SavingTransaction savingTransaction);
+
+    void savePrimaryWithdrawTransaction(PrimaryTransaction primaryTransaction);
+
+    void saveSavingWithdrawTransaction(SavingTransaction savingTransaction);
+
 }
