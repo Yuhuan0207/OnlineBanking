@@ -1,6 +1,8 @@
 package com.userfront.yuhuan.service;
 
+import com.userfront.yuhuan.domain.PrimaryAccount;
 import com.userfront.yuhuan.domain.PrimaryTransaction;
+import com.userfront.yuhuan.domain.SavingAccount;
 import com.userfront.yuhuan.domain.SavingTransaction;
 
 import java.util.List;
@@ -17,5 +19,7 @@ public interface TransactionService {
     void savePrimaryWithdrawTransaction(PrimaryTransaction primaryTransaction);
 
     void saveSavingWithdrawTransaction(SavingTransaction savingTransaction);
+
+    void betweenAccountsTransfer(String transferFrom, String transferTo, String amount, PrimaryAccount primaryAccount, SavingAccount savingAccount) throws Exception;
 
 }
