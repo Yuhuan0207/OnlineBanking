@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
 
     public void save(User user){
         userDao.save(user);
-    }
+    } //TODO: why create a new saveUser method instead of using this method?
 
     public User findByUsername(String username){
         return userDao.findByUsername(username);
